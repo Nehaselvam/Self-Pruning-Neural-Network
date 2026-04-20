@@ -1,0 +1,15 @@
+class PrunableLinear(nn.Module):
+    def __init__(self, in_features, out_features):
+        super().__init__()
+
+        self.weight = nn.Parameter(torch.randn(out_features, in_features))
+        self.bias = nn.Parameter(torch.zeros(out_features))
+
+        # Gate scores (learnable)
+        self.gate_scores = nn.Parameter(torch.randn(out_features, in_features))
+
+    def forward(self, x):
+        gates = torch.sigmoid(self.gate_scores)   # values between 0 and 1
+        pruned_weights = self.weight * gates      # apply pruning
+
+        return torch.matmul(x, pruned_weights.t()) + self.bias
