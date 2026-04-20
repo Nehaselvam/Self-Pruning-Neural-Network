@@ -1,0 +1,20 @@
+model = PrunableNet()
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+lambda_val = 0.001   # try different values later
+
+for epoch in range(5):
+    for images, labels in trainloader:
+
+        outputs = model(images)
+        loss = criterion(outputs, labels)
+
+        # add sparsity loss
+        loss += lambda_val * sparsity_loss(model)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+    print(f"Epoch {epoch} completed")
