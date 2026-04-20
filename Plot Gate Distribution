@@ -1,0 +1,12 @@
+import matplotlib.pyplot as plt
+
+all_gates = []
+
+for module in model.modules():
+    if isinstance(module, PrunableLinear):
+        gates = torch.sigmoid(module.gate_scores).detach().cpu().numpy()
+        all_gates.extend(gates.flatten())
+
+plt.hist(all_gates, bins=50)
+plt.title("Gate Value Distribution")
+plt.show()
