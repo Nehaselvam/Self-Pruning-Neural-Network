@@ -1,0 +1,7 @@
+def sparsity_loss(model):
+    loss = 0
+    for module in model.modules():
+        if isinstance(module, PrunableLinear):
+            gates = torch.sigmoid(module.gate_scores)
+            loss += torch.sum(gates)   # L1 norm
+    return loss
