@@ -49,6 +49,7 @@ Matplotlib
 torch
 torchvision
 matplotlib
+
 📌 Conclusion
 
 This project demonstrates how neural networks can optimize themselves by removing less important connections, making them efficient and suitable for real-world applications.
